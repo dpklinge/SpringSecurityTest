@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- Thymeleaf html import. 'header' is the file to import from (header.html), and 'links' is the specific marked thymeleaf
+	 fragment inside header.html to import. -->
+<th:block th:replace="header :: links">Placeholder</th:block>
+<title>Register</title>
+
+</head>
+<body>
+	<div th:replace="header :: header">Placeholder</div>
+	<div class="centered column">
+		<div class="centered column formbox">
+			<h1>Register</h1>
+			<!-- Thymeleaf operates similarly to JSP, but whereas JSPs are converted internally into servlets, 
+				 Thymeleaf intereprets html line by line looking for th: marked attributes and elements.
+				 In thymeleaf, we have an EL-like syntax that uses the following symbols:
+					 ${...} : Variable expressions.
+					 *{...} : Selection expressions.
+					 #{...} : Message (i18n) expressions.
+					 @{...} : Link (URL) expressions.
+					 ~{...} : Fragment expressions.
+				If used inside of a th: marked attribute, Thymeleaf will attempt to perform the related functionality.
+				  -->
+			<form class="centered column" th:action="@{/register}" method="POST" th:object="${user}">
+				<!-- Unlike in JSPs, empty EL expressions will not be removed, so conditional statements like these may be useful. -->
+				<div th:if="${ ValidUsername } != null">
+					<p th:text="${ ValidUsername }" class="error"></p>
+				</div>
+				<div th:if="${ error } != null">
+					<p th:text="${ error }" class="error"></p>
+				</div>
+				<p>Username</p>
+				<input th:field="*{username}"  type="text" name="username" placeholder="Username"
+					value="${username}" required autofocus>
+				<p>First name</p>
+				<div th:if="${ firstNameError } != null">
+					<p th:text="${ firstNameError }" class="error"></p>
+				</div>
+				<input th:field="*{firstName}" type="text" name="firstName" placeholder="First Name"
+					value="${firstName}" required>
+				<p>Last name</p>
+				<div th:if="${ lastNameError } != null">
+					<p th:text="${ lastNameError }" class="error"></p>
+				</div>
+				<input th:field="*{lastName}" type="text" name="lastName" placeholder="Last Name"
+					value="${lastName}" required>
+				<p>Password</p>
+				<div th:if="${ ValidPassword } != null">
+					<p th:text="${ ValidPassword }" class="error"></p>
+				</div>
+				<input type="password" name="password" placeholder="Password"
+					required>
+				<p>Confirm Password</p>
+				<input type="password" name="passwordConfirm" placeholder="password"
+					required>
+				<p></p>
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>
